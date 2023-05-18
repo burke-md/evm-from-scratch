@@ -1,20 +1,10 @@
-// Package evm is an **incomplete** implementation of the Ethereum Virtual
-// Machine for the "EVM From Scratch" course:
-// https://github.com/w1nt3r-eth/evm-from-scratch
-//
-// To work on EVM From Scratch In Go:
-//
-// - Install Golang: https://golang.org/doc/install
-// - Go to the `go` directory: `cd go`
-// - Edit `evm.go` (this file!), see TODO below
-// - Run `go test ./...` to run the tests
 package evm
 
 import (
 	"math/big"
+    "fmt"
 )
 
-// Run runs the EVM code and returns the stack and a success indicator.
 func Evm(code []byte) ([]*big.Int, bool) {
 	var stack []*big.Int
 	pc := 0
@@ -23,8 +13,13 @@ func Evm(code []byte) ([]*big.Int, bool) {
 		op := code[pc]
 		pc++
 
-		// TODO: Implement the EVM here!
-		_ = op // delete this; it's only here to make the compiler think you're already using `op`
+        switch op {
+        case byte(00):
+            fmt.Println("Opcode is 00")
+            stack = append(stack, op)
+        default:
+            fmt.Println("Does not reconize opcode")
+        }
 	}
 
 	return stack, true
