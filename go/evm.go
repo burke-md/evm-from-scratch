@@ -6,8 +6,6 @@ import (
 )
 
 func Evm(code []byte) ([]*big.Int, bool) {
-    fmt.Println("Code:", code)
-
 	var stack []*big.Int
 	pc := 0
 
@@ -15,11 +13,14 @@ func Evm(code []byte) ([]*big.Int, bool) {
 		op := code[pc]
 
         switch op {
-        case byte(0)://STOP
+        case byte(0x0)://STOP
             return stack, true
     
+        case byte(0x01)://ADD
+            i := new(big.Int).Add(stack[0], stack[1])
+            stack = append([]*big.Int{i}, stack[2:]...)
+
         case byte(0x50)://POP
-            fmt.Println("stack: ", stack)
             stack = stack[1:]
 
         case byte(0x5f)://PUSH0
