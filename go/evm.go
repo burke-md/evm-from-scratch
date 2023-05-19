@@ -37,6 +37,16 @@ func Evm(code []byte) ([]*big.Int, bool) {
 
             //Increment program counter past end of 2 byte 'arg'
             pc++
+
+        case byte(0x63)://PUSH4
+            pc++
+            opBigInt := new(big.Int)
+            opBigInt.SetBytes(code[pc:pc+4])
+            stack = append(stack, opBigInt)
+
+            //Increment program counter past end of 4 byte 'arg'
+            pc += 3
+
         default:
             fmt.Println("Does not reconize opcode")
         }
