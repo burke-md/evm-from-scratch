@@ -25,7 +25,6 @@ func Evm(code []byte) ([]*big.Int, bool) {
         
         case byte(0x60)://PUSH1
             pc++
-	    	op = code[pc]
 
             opBigInt := new(big.Int)
             opBigInt.SetBytes(code[pc:pc+1])
