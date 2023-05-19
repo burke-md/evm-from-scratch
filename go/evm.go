@@ -66,6 +66,11 @@ func Evm(code []byte) ([]*big.Int, bool) {
             pc += 11
 
 
+        case byte(0x7F)://PUSH32
+            fmt.Println("hit 7F")
+            stack = append(stack, parseBigInt(code, pc, 32))
+            pc += 32
+
         default:
             fmt.Println("Does not reconize opcode")
         }
