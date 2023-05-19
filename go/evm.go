@@ -16,7 +16,7 @@ func Evm(code []byte) ([]*big.Int, bool) {
 
         switch op {
         case byte(0)://STOP
-            break
+            return stack, true
     
         case byte(0x50)://POP
             fmt.Println("stack: ", stack)
