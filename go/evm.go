@@ -23,29 +23,19 @@ func Evm(code []byte) ([]*big.Int, bool) {
             opBigInt.SetString("0x00", 16)
             stack = append(stack, opBigInt)
         
-        case byte(0x60)://PUSH1
             pc++
-            opBigInt := new(big.Int)
-            opBigInt.SetBytes(code[pc:pc+1])
-            stack = append(stack, opBigInt)
+
+        case byte(0x60)://PUSH1
+            stack = append(stack, parseBigInt(code, pc, 1))
+            pc++
 
         case byte(0x61)://PUSH2
-            pc++
-            opBigInt := new(big.Int)
-            opBigInt.SetBytes(code[pc:pc+2])
-            stack = append(stack, opBigInt)
-
-            //Increment program counter past end of 2 byte 'arg'
-            pc++
+            stack = append(stack, parseBigInt(code, pc, 2))
+            pc += 3
 
         case byte(0x63)://PUSH4
-            pc++
-            opBigInt := new(big.Int)
-            opBigInt.SetBytes(code[pc:pc+4])
-            stack = append(stack, opBigInt)
-
-            //Increment program counter past end of 4 byte 'arg'
-            pc += 3
+            stack = append(stack, parseBigInt(code, pc, 4))
+            pc += 4
 
         default:
             fmt.Println("Does not reconize opcode")
@@ -55,4 +45,10 @@ func Evm(code []byte) ([]*big.Int, bool) {
 	}
 
 	return stack, true
+}
+
+func parseBigInt(code []byte, pc int, size int) *big.Int {
+    opBigInt := new(big.Int)
+    opBigInt.SetBytes(code[pc+1:pc+1+size])
+    return opBigInt
 }
