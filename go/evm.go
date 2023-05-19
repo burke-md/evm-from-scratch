@@ -17,6 +17,10 @@ func Evm(code []byte) ([]*big.Int, bool) {
         switch op {
         case byte(0)://STOP
             break
+    
+        case byte(0x50)://POP
+            fmt.Println("stack: ", stack)
+            stack = stack[1:]
 
         case byte(0x5f)://PUSH0
             opBigInt := new(big.Int)
@@ -67,7 +71,6 @@ func Evm(code []byte) ([]*big.Int, bool) {
 
 
         case byte(0x7F)://PUSH32
-            fmt.Println("hit 7F")
             stack = append([]*big.Int{parseBigInt(code, pc, 32)}, stack...)
             pc += 32
 
