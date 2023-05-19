@@ -15,12 +15,18 @@ func Evm(code []byte) ([]*big.Int, bool) {
 		op := code[pc]
 
         switch op {
-        case byte(0):
+        case byte(0)://STOP
             break
-        case byte(0x5f):
+        case byte(0x5f)://PUSH0
             opBigInt := new(big.Int)
-            opBigInt.SetString("0x5f", 16)
+            opBigInt.SetString("0x00", 16)
             stack = append(stack, opBigInt)
+        /*
+        case byte(0x60)://PUSH1
+            opBigInt := new(big.Int)
+            opBigInt.SetString("0x1", 16)
+            stack = append(stack, opBigInt)
+        */
         default:
             fmt.Println("Does not reconize opcode")
         }
