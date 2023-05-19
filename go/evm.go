@@ -37,6 +37,35 @@ func Evm(code []byte) ([]*big.Int, bool) {
             stack = append(stack, parseBigInt(code, pc, 4))
             pc += 4
 
+        case byte(0x64)://PUSH5
+            stack = append(stack, parseBigInt(code, pc, 5))
+            pc += 5
+
+        case byte(0x65)://PUSH6
+            stack = append(stack, parseBigInt(code, pc, 6))
+            pc += 6
+
+        case byte(0x66)://PUSH7
+            stack = append(stack, parseBigInt(code, pc, 7))
+            pc += 6
+
+        case byte(0x67)://PUSH8
+            stack = append(stack, parseBigInt(code, pc, 8))
+            pc += 8
+
+        case byte(0x68)://PUSH9
+            stack = append(stack, parseBigInt(code, pc, 9))
+            pc += 9
+
+        case byte(0x69)://PUSH10
+            stack = append(stack, parseBigInt(code, pc, 10))
+            pc += 10
+
+        case byte(0x6A)://PUSH11
+            stack = append(stack, parseBigInt(code, pc, 11))
+            pc += 11
+
+
         default:
             fmt.Println("Does not reconize opcode")
         }
